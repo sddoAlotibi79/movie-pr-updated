@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Login</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: #f5f5f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial;
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#f5f5f0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:Arial;
+
+    padding:20px;
+    box-sizing:border-box;
 }
 
-.phone {
-    width: 350px;
-    height: 600px;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    box-sizing: border-box;
+.phone{
 
-    background: linear-gradient(
+    width:90%;
+    max-width:430px;
+
+    min-height:650px;
+
+    border-radius:30px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding:35px 25px;
+
+    box-sizing:border-box;
+
+    background:linear-gradient(
         160deg,
         #0f1f3d,
         #1a2e55,
@@ -33,64 +50,108 @@ body {
     );
 }
 
-.logo {
-    width: 120px;
-    margin-top: 40px;
-    margin-bottom: 65px;
+.logo{
+    width:150px;
+
+    margin-top:40px;
+    margin-bottom:70px;
 }
 
-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+form{
+    width:100%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
-/* الحقول */
-input {
-    width: 260px;
-    height: 45px;
-    padding: 0 14px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    border: none;
-    outline: none;
-    background: rgba(255,255,255,0.15);
-    color: white;
-    box-sizing: border-box;
+input{
+
+    width:100%;
+    max-width:320px;
+
+    height:52px;
+
+    padding:0 16px;
+
+    margin-bottom:18px;
+
+    border-radius:14px;
+
+    border:none;
+    outline:none;
+
+    background:rgba(255,255,255,0.15);
+
+    color:white;
+
+    font-size:16px;
+
+    box-sizing:border-box;
 }
 
-input::placeholder {
-    color: #ddd;
+input::placeholder{
+    color:#ddd;
 }
 
-/* زر Login (نفس أزرار الصفحة الثانية) */
-.login-button {
-    width: 120px;
-    height: 40px;
-    border-radius: 12px;
-    border: none;
-    background: rgba(255,255,255,0.15);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: 10px;
+.login-button{
+
+    width:160px;
+    height:48px;
+
+    border-radius:14px;
+
+    border:none;
+
+    background:rgba(255,255,255,0.15);
+
+    color:white;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    margin-top:12px;
 }
 
-/* عند المرور */
-.login-button:hover {
-    background: white;
-    color: #0f1f3d;
+.login-button:hover{
+    background:white;
+    color:#0f1f3d;
 }
 
-.error {
-    color: #ffb4b4;
-    font-size: 13px;
-    margin-top: 15px;
-    text-align: center;
+.error{
+    color:#ffb4b4;
+
+    font-size:14px;
+
+    margin-top:18px;
+
+    text-align:center;
 }
+
+/* للجوال */
+@media (max-width:600px){
+
+    .phone{
+        width:100%;
+        min-height:85vh;
+        border-radius:25px;
+    }
+
+    .logo{
+        width:130px;
+    }
+
+    input{
+        max-width:100%;
+    }
+}
+
 </style>
+
 </head>
 
 <body>
@@ -100,10 +161,15 @@ input::placeholder {
     <img src="{{ url_for('static', filename='logo.png') }}" class="logo">
 
     <form method="POST">
+
         <input type="text" name="username" placeholder="Username">
+
         <input type="password" name="password" placeholder="Password">
 
-        <button class="login-button" type="submit">Login</button>
+        <button class="login-button" type="submit">
+            Login
+        </button>
+
     </form>
 
     {% if error %}
