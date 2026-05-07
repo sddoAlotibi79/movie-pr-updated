@@ -6,201 +6,334 @@
 <title>{{ category_name }}</title>
 
 <style>
-*{box-sizing:border-box}
 
+*{
+    box-sizing:border-box;
+}
+
+html,
 body{
+
     margin:0;
-    min-height:100dvh;
-    background:#f5f5f0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    padding:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
     font-family:Arial;
+
+    background:#0f1f3d;
 }
 
+/* الشاشة كاملة */
 .phone{
-    width:94vw;
-    max-width:430px;
-    height:92dvh;
-    border-radius:30px;
-    padding:20px;
-    position:relative;
-    background:linear-gradient(160deg,#0f1f3d,#1a2e55,#0f1f3d);
-    color:white;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100vw;
+    height:100dvh;
+
+    padding:22px;
+
     overflow-y:auto;
+
+    background:linear-gradient(
+        160deg,
+        #0f1f3d,
+        #1a2e55,
+        #0f1f3d
+    );
+
+    color:white;
 }
 
+/* رجوع */
 .back{
+
     position:absolute;
+
     top:18px;
     left:22px;
+
     color:white;
+
     text-decoration:none;
-    font-size:34px;
+
+    font-size:38px;
     font-weight:bold;
 }
 
+/* العنوان */
 .title{
+
     text-align:center;
-    margin-top:35px;
-    margin-bottom:18px;
-    font-size:24px;
+
+    margin-top:25px;
+    margin-bottom:20px;
+
+    font-size:28px;
     font-weight:bold;
 }
 
+/* قائمة الأفلام */
 .movies-list{
+
     width:100%;
-    max-width:350px;
+
     margin:0 auto;
 }
 
+/* كرت الفيلم */
 .movie-card{
+
     width:100%;
-    height:92px;
-    margin-bottom:12px;
+
+    min-height:95px;
+
+    margin-bottom:14px;
+
     background:rgba(255,255,255,0.15);
-    border-radius:15px;
-    padding:8px;
+
+    border-radius:18px;
+
+    padding:10px;
+
     display:flex;
+
     align-items:center;
+
     position:relative;
 }
 
+/* رابط الفيلم */
 .movie-link{
+
     display:flex;
+
     align-items:center;
+
     text-decoration:none;
+
     color:white;
+
     width:100%;
 }
 
+/* صورة الفيلم */
 .movie-card img{
-    width:60px;
-    height:76px;
+
+    width:70px;
+    height:82px;
+
     object-fit:cover;
-    border-radius:10px;
-    margin-right:12px;
-    background:rgba(255,255,255,0.15);
+
+    border-radius:12px;
+
+    margin-right:14px;
 }
 
+/* اسم الفيلم */
 .movie-name{
+
     font-weight:bold;
-    font-size:15px;
-    width:210px;
-    padding-right:35px;
+
+    font-size:18px;
+
+    width:100%;
 }
 
+/* القلب */
 .favorite-form{
+
     position:absolute;
-    right:10px;
-    top:28px;
+
+    right:14px;
+    top:30px;
 }
 
 .heart-btn{
+
     border:none;
+
     background:transparent;
+
     color:white;
-    font-size:24px;
+
+    font-size:28px;
+
     cursor:pointer;
 }
 
-.heart-btn.red{color:red}
-
-.chart-title{
-    text-align:center;
-    margin-top:20px;
-    margin-bottom:10px;
-    font-weight:bold;
-    font-size:16px;
+.heart-btn.red{
+    color:red;
 }
 
+/* عنوان الرسم */
+.chart-title{
+
+    text-align:center;
+
+    margin-top:24px;
+    margin-bottom:14px;
+
+    font-weight:bold;
+
+    font-size:18px;
+}
+
+/* الرسم */
 .vertical-chart{
+
     width:100%;
-    max-width:350px;
-    height:170px;
-    margin:0 auto 15px auto;
+
+    height:220px;
+
     background:rgba(255,255,255,0.10);
-    border-radius:15px;
-    padding:12px 8px 35px 8px;
+
+    border-radius:18px;
+
+    padding:14px 10px 40px 10px;
+
     display:flex;
+
     align-items:flex-end;
+
     justify-content:space-around;
-    gap:5px;
+
+    gap:8px;
+
+    margin-bottom:25px;
 }
 
 .bar-box{
+
     height:100%;
-    width:50px;
+
+    width:55px;
+
     display:flex;
+
     flex-direction:column;
+
     justify-content:flex-end;
+
     align-items:center;
 }
 
 .bar-views{
-    font-size:9px;
-    margin-bottom:3px;
+
+    font-size:11px;
+
+    margin-bottom:5px;
 }
 
 .bar{
-    width:24px;
+
+    width:28px;
+
     background:rgba(255,255,255,0.75);
-    border-radius:7px 7px 0 0;
+
+    border-radius:8px 8px 0 0;
 }
 
 .bar-name{
-    font-size:8px;
+
+    font-size:10px;
+
     text-align:center;
-    margin-top:4px;
-    width:50px;
+
+    margin-top:5px;
+
+    width:55px;
+
     color:white;
 }
+
 </style>
 </head>
 
 <body>
+
 <div class="phone">
 
     <a href="/categories" class="back">‹</a>
 
-    <div class="title">{{ category_name }}</div>
+    <div class="title">
+        {{ category_name }}
+    </div>
 
     <div class="movies-list">
+
         {% for movie in movies %}
+
         <div class="movie-card">
 
             <a href="/movie/{{ movie.title }}" class="movie-link">
+
                 <img src="{{ movie.image }}" alt="{{ movie.title }}">
-                <div class="movie-name">{{ movie.title }}</div>
+
+                <div class="movie-name">
+                    {{ movie.title }}
+                </div>
+
             </a>
 
             <form method="POST" action="/toggle_favorite" class="favorite-form">
+
                 <input type="hidden" name="movie_title" value="{{ movie.title }}">
+
                 <input type="hidden" name="category_name" value="{{ category_name }}">
 
                 {% if movie.title in favorites %}
+
                     <button class="heart-btn red" type="submit">♥️</button>
+
                 {% else %}
+
                     <button class="heart-btn" type="submit">♡</button>
+
                 {% endif %}
+
             </form>
 
         </div>
+
         {% endfor %}
+
     </div>
 
-    <div class="chart-title">Most Watched</div>
+    <div class="chart-title">
+        Most Watched
+    </div>
 
     <div class="vertical-chart">
+
         {% for movie in movies %}
+
         <div class="bar-box">
-            <div class="bar-views">{{ movie.views }}</div>
+
+            <div class="bar-views">
+                {{ movie.views }}
+            </div>
+
             <div class="bar" style="height: {{ movie.bar_height }}px;"></div>
-            <div class="bar-name">{{ movie.title }}</div>
+
+            <div class="bar-name">
+                {{ movie.title }}
+            </div>
+
         </div>
+
         {% endfor %}
+
     </div>
 
 </div>
+
 </body>
 </html>
