@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Movie Assistant</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #f5f5f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+}
+
+.phone {
+    width: 350px;
+    height: 600px;
+    border-radius: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0f1f3d, #1a2e55, #0f1f3d);
+    color: white;
+}
+
+.back {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Start Screen */
+.start-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-icon-box {
+    width: 170px;
+    height: 170px;
+    border: 4px solid rgba(255,255,255,0.18);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.start-logo {
+    width: 95px;
+}
+
+.start-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.start-text {
+    width: 250px;
+    text-align: center;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 30px;
+    font-size: 17px;
+}
+
+.start-btn {
+    width: 260px;
+    height: 48px;
+    border-radius: 14px;
+    border: none;
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.start-btn:hover {
+    background: white;
+    color: #0f1f3d;
+}
+
+/* Chat Screen */
+.chat-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 6px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.25) transparent;
+}
+
+.messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+}
+
+.message-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 82%;
+}
+
+.bot-wrap {
+    align-self: flex-start;
+}
+
+.user-wrap {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.message {
+    padding: 14px 16px;
+    border-radius: 18px;
+    line-height: 1.6;
+    white-space: pre-line;
+    word-wrap: break-word;
+    font-size: 15px;
+    animation: fadeUp 0.22s ease;
+}
+
+.bot-message {
+    background: rgba(255,255,255,0.16);
+    color: white;
+}
+
+.user-message {
+    background: rgba(177, 191, 231, 0.55);
+    color: white;
+}
+
+.poster-card {
+    width: 150px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.12);
+    padding: 8px;
+    box-sizing: border-box;
+    animation: fadeUp 0.22s ease;
+}
+
+.poster-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.movie-link-btn {
+    display: inline-block;
+    width: fit-content;
+    text-decoration: none;
+    border: none;
+    border-radius: 14px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s;
+    animation: fadeUp 0.22s ease;
+}
+
+.movie-link-btn:hover {
+    background: white;
+    color: #0f1f3d;
+}
+
+.quick-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 4px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.quick-buttons::-webkit-scrollbar {
+    display: none;
+}
+
+.quick-btn {
+    flex: 0 0 auto;
+    border: none;
+    border-radius: 14px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.14);
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.quick-btn:hover {
+    background: white;
+    color: #0f1f3d;
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-input {
+    flex: 1;
+    height: 46px;
+    border-radius: 24px;
+    border: 2px solid rgba(255,255,255,0.35);
+    background: transparent;
+    outline: none;
+    padding: 0 16px;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.chat-input::placeholder {
+    color: rgba(255,255,255,0.58);
+}
+
+.send-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-size: 21px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.send-btn:hover {
+    background: white;
+    color: #0f1f3d;
+}
+
+.typing-message {
+    background: rgba(255,255,255,0.16);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 58px;
+    width: fit-content;
+}
+
+.typing-dots {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.typing-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    display: inline-block;
+    animation: typingBounce 0.8s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+@keyframes typingBounce {
+    0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.45;
+    }
+    40% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+    <a href="/home" class="back">‹</a>
+
+    <div id="startScreen" class="start-screen">
+        <div class="start-icon-box">
+            <img src="{{ url_for('static', filename='logo.png') }}" class="start-logo" alt="Movie Assistant Logo">
+        </div>
+
+        <div class="start-title">Welcome to Chat</div>
+
+        <div class="start-text">
+            Hello, I’m your Movie Assistant. I can help you find movies by mood, genre, favorites, or details.
+        </div>
+
+        <button class="start-btn" onclick="startChat()">Start the chat</button>
+    </div>
+
+    <div id="chatScreen" class="chat-screen hidden">
+        <div class="chat-title">Movie Assistant</div>
+
+        <div id="messages" class="messages"></div>
+
+        <div id="quickButtons" class="quick-buttons"></div>
+
+        <div class="input-area">
+            <input
+                id="userInput"
+                class="chat-input"
+                type="text"
+                placeholder="Type your message..."
+            >
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let chatStarted = false;
+
+function startChat() {
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("chatScreen").classList.remove("hidden");
+
+    if (!chatStarted) {
+        addTextMessage("Hello! I'm your Movie Assistant.\nHow can I help you today?", "bot");
+        renderQuickButtons([
+       "recommend by favorites",
+       "recommend by mood",
+       "do you have Interstellar?",
+       "show my favorites"
+     ]);
+        chatStarted = true;
+        document.getElementById("userInput").focus();
+    }
+}
+
+function addTextMessage(text, sender) {
+    const messages = document.getElementById("messages");
+
+    const wrap = document.createElement("div");
+    wrap.className = "message-wrap " + (sender === "user" ? "user-wrap" : "bot-wrap");
+
+    const msg = document.createElement("div");
+    msg.className = "message " + (sender === "user" ? "user-message" : "bot-message");
+    msg.innerText = text;
+
+    wrap.appendChild(msg);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function addPoster(url) {
+    const messages = document.getElementById("messages");
+
+    const wrap = document.createElement("div");
+    wrap.className = "message-wrap bot-wrap";
+
+    const card = document.createElement("div");
+    card.className = "poster-card";
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "Movie Poster";
+
+    card.appendChild(img);
+    wrap.appendChild(card);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function addMovieButton(label, url) {
+    const messages = document.getElementById("messages");
+
+    const wrap = document.createElement("div");
+    wrap.className = "message-wrap bot-wrap";
+
+    const link = document.createElement("a");
+    link.className = "movie-link-btn";
+    link.href = url;
+    link.innerText = label;
+
+    wrap.appendChild(link);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function renderQuickButtons(suggestions) {
+    const box = document.getElementById("quickButtons");
+    box.innerHTML = "";
+
+    suggestions.forEach(text => {
+        const btn = document.createElement("button");
+        btn.className = "quick-btn";
+        btn.innerText = text;
+        btn.onclick = () => sendQuick(text);
+        box.appendChild(btn);
+    });
+}
+
+function addTypingIndicator() {
+    const messages = document.getElementById("messages");
+
+    const wrap = document.createElement("div");
+    wrap.className = "message-wrap bot-wrap";
+    wrap.id = "typingIndicator";
+
+    const msg = document.createElement("div");
+    msg.className = "message typing-message";
+
+    const dots = document.createElement("div");
+    dots.className = "typing-dots";
+    dots.innerHTML = "<span></span><span></span><span></span>";
+
+    msg.appendChild(dots);
+    wrap.appendChild(msg);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+
+    return wrap;
+}
+
+function removeTypingIndicator() {
+    const typing = document.getElementById("typingIndicator");
+    if (typing) {
+        typing.remove();
+    }
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    addTextMessage(message, "user");
+    input.value = "";
+    input.focus();
+
+    const typingStart = Date.now();
+    addTypingIndicator();
+
+    try {
+        const response = await fetch("/chatbot_reply", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: message })
+        });
+
+        const data = await response.json();
+
+        const elapsed = Date.now() - typingStart;
+        const minimumTypingTime = 300;
+
+        if (elapsed < minimumTypingTime) {
+            await delay(minimumTypingTime - elapsed);
+        }
+
+        removeTypingIndicator();
+
+        addTextMessage(data.reply || "No reply received.", "bot");
+
+        if (data.poster_url) {
+            addPoster(data.poster_url);
+        }
+
+        if (data.button_label && data.button_url) {
+            addMovieButton(data.button_label, data.button_url);
+        }
+
+        renderQuickButtons(data.suggestions || []);
+        input.focus();
+    } catch (error) {
+        removeTypingIndicator();
+        addTextMessage("Something went wrong while connecting to the chatbot.", "bot");
+    }
+}
+
+function sendQuick(text) {
+    const input = document.getElementById("userInput");
+    input.value = text;
+    sendMessage();
+}
+
+document.getElementById("userInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Categories</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #f5f5f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+}
+
+.phone {
+    width: 350px;
+    height: 600px;
+    border-radius: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    background: linear-gradient(160deg, #0f1f3d, #1a2e55, #0f1f3d);
+    color: white;
+}
+
+.back {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.logo {
+    width: 90px;
+    display: block;
+    margin: 35px auto 25px auto;
+}
+
+.search-box {
+    width: 290px;
+    height: 45px;
+    margin: 0 auto 20px auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+
+.search-box input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.search-icon {
+    color: white;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.error {
+    color: #ff8080;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.categories {
+    width: 290px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.category-btn {
+    height: 75px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+    font-size: 19px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+    <a href="/home" class="back">‹</a>
+
+    <img src="/static/logo.png" class="logo">
+
+    <form method="GET" action="/search" class="search-box">
+        <input type="text" name="search" placeholder="Search..." autocomplete="off">
+        <span class="search-icon">⌕</span>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <div class="categories">
+        <a href="/category/Action" class="category-btn">Action</a>
+        <a href="/category/Drama" class="category-btn">Drama</a>
+        <a href="/category/Sci-Fi" class="category-btn">Sci-Fi</a>
+        <a href="/category/Mystery" class="category-btn">Mystery</a>
+        <a href="/category/Family" class="category-btn">Family</a>
+        <a href="/category/Comedy" class="category-btn">Comedy</a>
+    </div>
+
+</div>
+
+</body>
+</html>
